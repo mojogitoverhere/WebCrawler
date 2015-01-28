@@ -14,6 +14,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.jsoup.Jsoup;
 
 public class Crawler {
@@ -64,6 +66,17 @@ public class Crawler {
 		
 	}
 	
+	private Document readPageData(URL url)
+	{
+		Document doc = null;
+		try{
+			doc = Jsoup.connect(url.toString()).get();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return doc;
+	}
+	/*
 	private String readPageData(URL url)
 	{
 		HttpURLConnection httpConnect = null;
@@ -95,17 +108,26 @@ public class Crawler {
 		}
 		return builder.toString();
 	}
+	*/
 	
 	private void processURL(URL url)
 	{
-		// Read in the page data
-		String pageData = readPageData(url);
+		//  Get the page data
+		Document pageData = readPageData(url);
 		
-		// Save the page data in a new file
 		if(pageData != null)
 		{
-			writePageData(url, pageData);
-		}
+			// Save the page data in a new file
+			writePageData(url, pageData.html());
+		
+			// Extract all links
+			Elements links = pageData.select("a[href]");
+			for(Element link : links)
+			{
+				//System.out.println(link.attr("href"));
+			}
+			
+		}	
 	}
 	
 	public void start() throws IOException{
