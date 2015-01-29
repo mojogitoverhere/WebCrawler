@@ -76,39 +76,6 @@ public class Crawler {
 		}
 		return doc;
 	}
-	/*
-	private String readPageData(URL url)
-	{
-		HttpURLConnection httpConnect = null;
-		StringBuilder builder = null;
-		try {
-			// Connect to the next URL in the queue
-			httpConnect = (HttpURLConnection) url.openConnection();
-			builder = new StringBuilder(); //buffer holding contents of the URL
-			
-			InputStream inStream = (InputStream) httpConnect.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
-			
-			String line;
-			
-			// Read in the data from the URL
-			while((line = reader.readLine()) != null){
-				builder.append(line);
-				builder.append('\n');
-			}
-			
-			// Close the reader
-			reader.close();
-		}catch( Exception e) {
-			e.printStackTrace();
-		}finally{
-			
-			// Close the connection
-			httpConnect.disconnect();
-		}
-		return builder.toString();
-	}
-	*/
 	
 	private void processURL(URL url)
 	{
@@ -124,7 +91,7 @@ public class Crawler {
 			Elements links = pageData.select("a[href]");
 			for(Element link : links)
 			{
-				//System.out.println(link.attr("href"));
+				System.out.println(link.attr("abs:href"));
 			}
 			
 		}	
